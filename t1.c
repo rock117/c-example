@@ -1,24 +1,27 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <stdio.h>
-pthread_t ntid;
 
-void printids(const char *s){
-	pid_t pid;
-	pthread_t tid;
-	pid = getpid();
-	tid = pthread_self();
-	printf("%s pid %u tid %u (0x%x) \n",  s, (unsigned int)pid, (unsigned int)tid, (unsigned int)tid);
-}
+
 
 void *thr_fn(void *arg){
-	printids("new thread: ");
+	int i;
+	for(i=0; i<1111; i++){
+        printf("sub thread %d\n", i);
+        sleep(1);
+	}
 	return ((void *)0);
 }
 
 int main(void){
-	int err = pthread_create(&ntid, NULL, thr_fn, NULL);
-	printids("main thread: ");
-	sleep(1);
-	exit(0);
+    pthread_t  threadId;
+	int err = pthread_create(&threadId, NULL, thr_fn, NULL);
+
+	sleep(3);
+	int i;
+	for(i=0; i<1111; i++){
+        printf("main thread %d\n", i);
+        sleep(1)
+	}
+	return 0;
 }
